@@ -16,8 +16,11 @@ Changelog:
     > just sharing the spreadsheet is not enough, it needs to be _Published_ as well
 	
     > created own copy and published that, at least it gets pulled live from a remote source (instead of manually creating a .csv)
-  - this.state.data gets set with {name: , excercise: , difficultyRating: , enjoymentRating: }
+  - this.state.data gets set with {student: , assignment: , difficultyRating: , enjoymentRating: }
     > _postProcess: function (element) {
-        element["name"] = element["Wie ben je?"];},_
+        element["student"] = element["Wie ben je?"];},_
 	> this just creates extra properties instead of renaming them, remapped them through a temp cleanData Array
   - Initial method kept in components/StudentData.js for now
+- Created Chart.js that renders input to a graph, using the Victory charting components, for now just using test data
+- Chart is only rendered when the loading of the data from the google spreadsheet is completed
+- Created listSet of students and of assignments, on completion of getting the data from the google spreadsheet

@@ -5,88 +5,83 @@ import {
   VictoryAxis,
   VictoryTheme,
   VictoryTooltip,
-  VictoryStack,
+  VictoryGroup,
+  VictoryLabel,
+  // VictoryStack,
 } from "victory";
 
-const data2012 = [
-  { quarter: 1, earnings: 13000 },
-  { quarter: 2, earnings: 16500 },
-  { quarter: 3, earnings: 14250 },
-  { quarter: 4, earnings: 19000 },
-];
+function Chart(props) {
+  console.log("Chart's props: ", props);
 
-const data2013 = [
-  { quarter: 1, earnings: 15000 },
-  { quarter: 2, earnings: 12500 },
-  { quarter: 3, earnings: 19500 },
-  { quarter: 4, earnings: 13000 },
-];
+  const calculateAverage = function (numbers) {
+    // console.log(numbers);
+    // const average = numbers.reduce((total, n) => total + n) / numbers.length;
+    return numbers.reduce((total, n) => total + n) / numbers.length;
+  };
 
-const data2014 = [
-  { quarter: 1, earnings: 11500 },
-  { quarter: 2, earnings: 13250 },
-  { quarter: 3, earnings: 20000 },
-  { quarter: 4, earnings: 15500 },
-];
+  const allXRatings = function (toSortOn, type) {
+    // console.log(`getting all ${type}-ratings for the assignment: ${toSortOn}`);
+    // const toAverage = props.data
+    //   .filter((item) => item.assignment === toSortOn)
+    //   .map((item) => item[type]);
+    // console.log(toAverage);
+    return props.data
+      .filter((item) => item.assignment === toSortOn)
+      .map((item) => item[type]);
+  };
 
-const data2015 = [
-  { quarter: 1, earnings: 18000 },
-  { quarter: 2, earnings: 13250 },
-  { quarter: 3, earnings: 15000 },
-  { quarter: 4, earnings: 12000 },
-];
+  let chartData = [];
+  chartData = props.assignments.map((assignment) => ({
+    assignment: assignment,
+    difficultyRating: calculateAverage(
+      allXRatings(assignment, "difficultyRating")
+    ),
+    enjoymentRating: calculateAverage(
+      allXRatings(assignment, "enjoymentRating")
+    ),
+  }));
+  // console.log("chartData = ", chartData);
 
-class Chart extends React.Component {
-  render() {
-    return (
-      <VictoryChart
-        width={800}
-        height={350}
-        // adding the material theme provided with Victory
-        theme={VictoryTheme.grayscale}
-        // domainPadding will add space to each side of VictoryBar to
-        // prevent it from overlapping the axis
-        domainPadding={20}
-      >
-        <VictoryAxis
-          // tickValues specifies both the number of ticks and where
-          // they are placed on the axis
-          tickValues={[1, 2, 3, 4]}
-          tickFormat={["Quarter 1", "Quarter 2", "Quarter 3", "Quarter 4"]}
+  // render() {
+  return (
+    <VictoryChart
+      width={1000}
+      height={250}
+      // adding the material theme provided with Victory
+      theme={VictoryTheme.material}
+      // domainPadding will add space to each side of VictoryBar to
+      // prevent it from overlapping the axis
+      domainPadding={50}
+      padding={{ top: 5, bottom: 80, right: 20, left: 20 }}
+    >
+      <VictoryGroup offset={2}>
+        <VictoryBar
+          labelComponent={<VictoryTooltip />}
+          data={chartData}
+          x="assignment"
+          y="difficultyRating"
+          tickValues={[1, 2, 3, 4, 5]}
+          tickFormat={chartData.map((item) => item.assignment)}
         />
-        <VictoryAxis
-          dependentAxis
-          // tickFormat specifies how ticks should be displayed
-          tickFormat={(x) => `$${x / 1000}k`}
+        <VictoryBar
+          labelComponent={<VictoryTooltip />}
+          data={chartData}
+          x="assignment"
+          y="enjoymentRating"
+          tickValues={[1, 2, 3, 4, 5]}
+          tickFormat={chartData.map((item) => item.assignment)}
         />
-        <VictoryStack>
-          <VictoryBar
-            labelComponent={<VictoryTooltip />}
-            data={data2012}
-            x="quarter"
-            y="earnings"
-          />
-          <VictoryBar
-            labelComponent={<VictoryTooltip />}
-            data={data2013}
-            x="quarter"
-            y="earnings"
-          />
-          <VictoryBar
-            labelComponent={<VictoryTooltip />}
-            data={data2014}
-            x="quarter"
-            y="earnings"
-          />
-          <VictoryBar
-            labelComponent={<VictoryTooltip />}
-            data={data2015}
-            x="quarter"
-            y="earnings"
-          />
-        </VictoryStack>
-      </VictoryChart>
-    );
-  }
+      </VictoryGroup>
+      <VictoryAxis
+        // tickValues specifies both the number of ticks and where
+        // they are placed on the axis
+        tickLabelComponent={<VictoryLabel angle={90} textAnchor="start" />}
+        tickValues={[1, 2, 3, 4, 5]}
+        tickFormat={chartData.map((item) => item.assignment)}
+      />
+      <VictoryAxis dependentAxis />
+    </VictoryChart>
+  );
+  // }
 }
 export default Chart;

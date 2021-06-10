@@ -24,3 +24,4 @@ Changelog:
 - Created Chart.js that renders input to a graph, using the Victory charting components, for now just using test data
 - Chart is only rendered when the loading of the data from the google spreadsheet is completed
 - Created listSet of students and of assignments, on completion of getting the data from the google spreadsheet
+- Chart now renders our data, ratings are averaged per assignment

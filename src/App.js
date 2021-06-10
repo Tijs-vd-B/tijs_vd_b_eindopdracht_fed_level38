@@ -10,11 +10,12 @@ class App extends Component {
     this.state = {
       data: [],
       loaded: false,
+      parsed: false,
     };
   }
 
   componentDidMount() {
-    this.setState({ loaded: false });
+    // this.setState({ loaded: false });
     Tabletop.init({
       key: "1fKX0b0-FMXqo6M0VfPIt7oBYUzgVbxtNXtN790i_mN8", // my-key
       // key: "1SwA98fnmzIFrSjbPDvzUw7JEqW1VE5YUJvchcEL0aUE", // my-key (no-publish test)
@@ -42,19 +43,24 @@ class App extends Component {
     });
   }
 
+  parseData() {
+    const assignmentSet = new Set();
+    this.state.data.forEach((i) => assignmentSet.add(i.assignment));
+    console.log(assignmentSet);
+    const studentSet = new Set();
+    this.state.data.forEach((i) => studentSet.add(i.student));
+    console.log(studentSet);
+    this.setState({
+      ...this.state,
+      assignments: Array.from(assignmentSet),
+      students: Array.from(studentSet).sort(),
+      parsed: true,
+    });
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (prevState.loaded !== this.state.loaded) {
-      const assignmentSet = new Set();
-      this.state.data.forEach((i) => assignmentSet.add(i.assignment));
-      console.log(assignmentSet);
-      const studentSet = new Set();
-      this.state.data.forEach((i) => studentSet.add(i.student));
-      console.log(studentSet);
-      this.setState({
-        ...this.state,
-        assignments: assignmentSet,
-        students: studentSet,
-      });
+      this.parseData();
     }
   }
 
@@ -63,7 +69,11 @@ class App extends Component {
     const text = !this.state.loaded
       ? "loading..."
       : `${this.state.data.length} records imported!`;
-    const chart = !this.state.loaded ? "" : <Chart data={this.state.data} />;
+    const chart = !this.state.parsed ? (
+      ""
+    ) : (
+      <Chart data={this.state.data} assignments={this.state.assignments} />
+    );
     return (
       <div className="App">
         <header className="App-header">

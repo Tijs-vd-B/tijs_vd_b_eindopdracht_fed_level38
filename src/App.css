@@ -18,3 +18,9 @@ h1,
 h3 {
   margin: 0;
 }
+
+svg:not(:root) {
+  overflow: visible;
+  overflow-y: visible;
+  overflow-y: visible;
+}

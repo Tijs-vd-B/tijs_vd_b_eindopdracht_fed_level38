@@ -58,9 +58,25 @@ class App extends Component {
     });
   }
 
+  addSudentInfo() {
+    const baseUrl = "https://randomuser.me/";
+    const length = this.state.students.length;
+    const fetchUrl = `${baseUrl}api/?results=${length}&inc=name,dob,phone,picture&noinfo`;
+    fetch(fetchUrl)
+      .then((res) => res.json())
+      .then((data) => {
+        this.setState({ studentInfo: data.results });
+        console.log(this.state.studentInfo);
+      })
+      .catch(console.log);
+  }
+
   componentDidUpdate(prevProps, prevState) {
     if (prevState.loaded !== this.state.loaded) {
       this.parseData();
+    }
+    if (prevState.students !== this.state.students) {
+      this.addSudentInfo();
     }
   }
 

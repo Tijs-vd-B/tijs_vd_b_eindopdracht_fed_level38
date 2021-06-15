@@ -22,6 +22,9 @@ Changelog:
 	> this just creates extra properties instead of renaming them, remapped them through a temp cleanData Array
   - Initial method kept in components/StudentData.js for now
 - Created Chart.js that renders input to a graph, using the Victory charting components, for now just using test data
+  - ! npm install victory
 - Chart is only rendered when the loading of the data from the google spreadsheet is completed
 - Created listSet of students and of assignments, on completion of getting the data from the google spreadsheet
 - Chart now renders our data, ratings are averaged per assignment
+- Added zoom to the chart
+- Added fetching some random student info with addSudentInfo that fetches info from randomuser.me

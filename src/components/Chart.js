@@ -7,6 +7,8 @@ import {
   VictoryTooltip,
   VictoryGroup,
   VictoryLabel,
+  // VicontainerComponent,
+  VictoryZoomContainer,
   // VictoryStack,
 } from "victory";
 
@@ -45,18 +47,20 @@ function Chart(props) {
   // render() {
   return (
     <VictoryChart
-      width={1000}
+      width={900}
       height={250}
       // adding the material theme provided with Victory
-      theme={VictoryTheme.material}
+      theme={VictoryTheme.grayscale}
       // domainPadding will add space to each side of VictoryBar to
       // prevent it from overlapping the axis
       domainPadding={50}
-      padding={{ top: 5, bottom: 80, right: 20, left: 20 }}
+      padding={{ top: 5, bottom: 80, right: 40, left: 40 }}
+      containerComponent={<VictoryZoomContainer zoomDimension="x" />}
     >
-      <VictoryGroup offset={2}>
+      <VictoryGroup offset={4}>
         <VictoryBar
-          labelComponent={<VictoryTooltip />}
+          labelComponent={<VictoryTooltip pointerWidth={0} />}
+          labels={chartData.map((item) => item.difficultyRating)}
           data={chartData}
           x="assignment"
           y="difficultyRating"
@@ -64,10 +68,12 @@ function Chart(props) {
           tickFormat={chartData.map((item) => item.assignment)}
         />
         <VictoryBar
-          labelComponent={<VictoryTooltip />}
+          labelComponent={<VictoryTooltip pointerWidth={0} />}
+          labels={chartData.map((item) => item.enjoymentRating)}
           data={chartData}
           x="assignment"
           y="enjoymentRating"
+          colorScale={"warm"}
           tickValues={[1, 2, 3, 4, 5]}
           tickFormat={chartData.map((item) => item.assignment)}
         />
@@ -75,7 +81,7 @@ function Chart(props) {
       <VictoryAxis
         // tickValues specifies both the number of ticks and where
         // they are placed on the axis
-        tickLabelComponent={<VictoryLabel angle={90} textAnchor="start" />}
+        tickLabelComponent={<VictoryLabel angle={60} textAnchor="start" />}
         tickValues={[1, 2, 3, 4, 5]}
         tickFormat={chartData.map((item) => item.assignment)}
       />

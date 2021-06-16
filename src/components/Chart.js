@@ -15,10 +15,30 @@ import {
 function Chart(props) {
   console.log("Chart's props: ", props);
 
+  let selectedData = [];
+  if (props.selectedStudents == undefined) {
+    selectedData = props.data;
+    console.log(selectedData);
+  } else {
+    console.log("apparently selectedStudents is NOT undefined");
+    props.selectedStudents.forEach((name) => {
+      props.data.filter((item) => {
+        if (item.student === name) {
+          selectedData = [...selectedData].concat(item);
+        }
+      });
+    });
+  }
+
   const calculateAverage = function (numbers) {
+    if (props.selectedStudents == "") {
+      return 0;
+    }
     // console.log(numbers);
     // const average = numbers.reduce((total, n) => total + n) / numbers.length;
-    return numbers.reduce((total, n) => total + n) / numbers.length;
+    else {
+      return numbers.reduce((total, n) => total + n) / numbers.length;
+    }
   };
 
   const allXRatings = function (toSortOn, type) {
@@ -26,13 +46,14 @@ function Chart(props) {
     // const toAverage = props.data
     //   .filter((item) => item.assignment === toSortOn)
     //   .map((item) => item[type]);
-    // console.log(toAverage);
-    return props.data
+    return selectedData
       .filter((item) => item.assignment === toSortOn)
       .map((item) => item[type]);
   };
 
   let chartData = [];
+  console.log(props.selectedStudents);
+  console.log(`does the filter work? selectedData = ${selectedData.length}`);
   chartData = props.assignments.map((assignment) => ({
     assignment: assignment,
     difficultyRating: calculateAverage(
@@ -54,7 +75,7 @@ function Chart(props) {
       // domainPadding will add space to each side of VictoryBar to
       // prevent it from overlapping the axis
       domainPadding={50}
-      padding={{ top: 5, bottom: 80, right: 40, left: 40 }}
+      padding={{ top: 5, bottom: 100, right: 40, left: 40 }}
       containerComponent={<VictoryZoomContainer zoomDimension="x" />}
     >
       <VictoryGroup offset={4}>
@@ -68,7 +89,9 @@ function Chart(props) {
           tickFormat={chartData.map((item) => item.assignment)}
         />
         <VictoryBar
-          labelComponent={<VictoryTooltip pointerWidth={0} />}
+          labelComponent={
+            <VictoryTooltip pointerWidth={0} style={{ fill: "tomato" }} />
+          }
           labels={chartData.map((item) => item.enjoymentRating)}
           data={chartData}
           x="assignment"
@@ -82,6 +105,10 @@ function Chart(props) {
         // tickValues specifies both the number of ticks and where
         // they are placed on the axis
         tickLabelComponent={<VictoryLabel angle={60} textAnchor="start" />}
+        style={{
+          tickLabels: { fontSize: 8, padding: 1 },
+          labels: { fontSize: 8, padding: 1 },
+        }}
         tickValues={[1, 2, 3, 4, 5]}
         tickFormat={chartData.map((item) => item.assignment)}
       />

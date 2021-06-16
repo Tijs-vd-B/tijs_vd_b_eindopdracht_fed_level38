@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import "./App.css";
 import Tabletop from "tabletop";
-// import StudentData from "./components/StudentData";
+import { Switch, Route, Link } from "react-router-dom";
 import Chart from "./components/Chart";
+import InputSelect from "./components/InputSelect";
 
 class App extends Component {
   constructor() {
@@ -12,6 +13,7 @@ class App extends Component {
       loaded: false,
       parsed: false,
     };
+    this.handleChartChange = this.handleChartChange.bind(this);
   }
 
   componentDidMount() {
@@ -58,7 +60,7 @@ class App extends Component {
     });
   }
 
-  addSudentInfo() {
+  addStudentInfo() {
     const baseUrl = "https://randomuser.me/";
     const length = this.state.students.length;
     const fetchUrl = `${baseUrl}api/?results=${length}&inc=name,dob,phone,picture&noinfo`;
@@ -76,9 +78,18 @@ class App extends Component {
       this.parseData();
     }
     if (prevState.students !== this.state.students) {
-      this.addSudentInfo();
+      this.addStudentInfo();
     }
   }
+
+  handleChartChange = (selectValue) => {
+    console.log(selectValue);
+    const selectedStudents = selectValue.map((item) => item.value);
+    console.log(selectedStudents);
+    this.setState({ selectedStudents: selectedStudents });
+    // const { name, value } = event.target;
+    // this.setState({ [name]: value });
+  };
 
   render() {
     console.log("updated state --->", this.state);
@@ -88,7 +99,22 @@ class App extends Component {
     const chart = !this.state.parsed ? (
       ""
     ) : (
-      <Chart data={this.state.data} assignments={this.state.assignments} />
+      <Chart
+        data={this.state.data}
+        assignments={this.state.assignments}
+        selectedStudents={this.state.selectedStudents}
+      />
+    );
+    const selectChartBar = !this.state.parsed ? (
+      ""
+    ) : (
+      <InputSelect
+        name="selectedStudents"
+        items={this.state.students}
+        placeholder="None"
+        handleChange={this.handleChartChange}
+        //   defaultValue="Unknown"
+      />
     );
     return (
       <div className="App">
@@ -99,9 +125,33 @@ class App extends Component {
           {text}
         </header>
         {chart}
+        {selectChartBar}
+        <Switch>
+          <Route exact path="/" component={Home} />
+          {/* <Route path="/items" component={Items}/>
+            <Route path="/category" component={Category}/>
+            <Route path="/login" component={Login}/>}/>
+            <PrivateRoute path="/admin" component={Admin} isAuthenticated={fakeAuth.isAuthenticated}/> */}
+        </Switch>
       </div>
     );
   }
 }
+export const Home = () => (
+  <div>
+    <h1> Home Component</h1>
+    <div>
+      Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+      Lorem Ipsum has been the industry's standard dummy text ever since the
+      1500s, when an unknown printer took a galley of type and scrambled it to
+      make a type specimen book. It has survived not only five centuries, but
+      also the leap into electronic typesetting, remaining essentially
+      unchanged. It was popularised in the 1960s with the release of Letraset
+      sheets containing Lorem Ipsum passages, and more recently with desktop
+      publishing software like Aldus PageMaker including versions of Lorem
+      Ipsum.
+    </div>
+  </div>
+);
 
 export default App;

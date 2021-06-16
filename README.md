@@ -28,3 +28,8 @@ Changelog:
 - Chart now renders our data, ratings are averaged per assignment
 - Added zoom to the chart
 - Added fetching some random student info with addSudentInfo that fetches info from randomuser.me
+- Added the basics for Routing through react-router-dom, only Home for now
+- Added a Select element with react-select through which you can select students to filter the shown data with
+  - Default state is all students are selected, you can deselect them by clicking the x next to their name, (or with keyboard BCKSPCE or DELETE)
+  - Add students by picking them in the list
+  - Remove all at once with the X on the right of the Select bar

@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import "./App.css";
 import Tabletop from "tabletop";
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import Chart from "./components/Chart";
+import NavBar from "./components/NavBar";
 import InputSelect from "./components/InputSelect";
 
 class App extends Component {
@@ -116,6 +117,17 @@ class App extends Component {
         //   defaultValue="Unknown"
       />
     );
+    const navBar = !this.state.parsed ? (
+      ""
+    ) : (
+      <NavBar
+        name="selectNav"
+        items={this.state.students}
+        // placeholder="None"
+        // handleChange={this.handleChartChange}
+        //   defaultValue="Unknown"
+      />
+    );
     return (
       <div className="App">
         <header className="App-header">
@@ -124,13 +136,14 @@ class App extends Component {
           {/* <StudentData /> */}
           {text}
         </header>
+        {navBar}
         {chart}
         {selectChartBar}
         <Switch>
           <Route exact path="/" component={Home} />
-          {/* <Route path="/items" component={Items}/>
-            <Route path="/category" component={Category}/>
-            <Route path="/login" component={Login}/>}/>
+          {/* <Route path="/items" component={Items}/> */}
+          <Route path="/students" component={Students} />
+          {/*   <Route path="/login" component={Login}/>}/>
             <PrivateRoute path="/admin" component={Admin} isAuthenticated={fakeAuth.isAuthenticated}/> */}
         </Switch>
       </div>
@@ -151,6 +164,16 @@ export const Home = () => (
       publishing software like Aldus PageMaker including versions of Lorem
       Ipsum.
     </div>
+  </div>
+);
+
+export const Students = ({ match }) => (
+  <div>
+    <h1>Category Component</h1>
+    <Route
+      path={`${match.path}/:categoryName`}
+      render={(props) => <div>{props.match.params.categoryName} category</div>}
+    />
   </div>
 );
 

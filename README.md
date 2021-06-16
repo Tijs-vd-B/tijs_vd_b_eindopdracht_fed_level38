@@ -34,3 +34,4 @@ Changelog:
   - Add students by picking them in the list
   - Remove all at once with the X on the right of the Select bar
 - Added average linegraph, always showing the average ratings of all students
+- Rounded the avg to 2 decimal places

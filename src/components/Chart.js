@@ -37,7 +37,9 @@ function Chart(props) {
     }
     // const average = numbers.reduce((total, n) => total + n) / numbers.length;
     else {
-      return numbers.reduce((total, n) => total + n) / numbers.length;
+      return +(
+        numbers.reduce((total, n) => total + n) / numbers.length
+      ).toFixed(2);
     }
   };
 
@@ -90,7 +92,7 @@ function Chart(props) {
       theme={VictoryTheme.grayscale}
       // domainPadding will add space to each side of VictoryBar to
       // prevent it from overlapping the axis
-      domainPadding={10}
+      domainPadding={20}
       padding={{ top: 5, bottom: 100, right: 40, left: 40 }}
       containerComponent={<VictoryZoomContainer zoomDimension="x" />}
     >
@@ -150,12 +152,12 @@ function Chart(props) {
           tickLabels: { fontSize: 8, padding: 1 },
           labels: { fontSize: 8, padding: 1 },
         }}
-        tickValues={[1, 2, 3, 4, 5]}
+        // tickValues={[1, 2, 3, 4, 5]}
         tickFormat={chartBarData.map((item) => item.assignment)}
       />
       <VictoryAxis
         dependentAxis
-        tickValues={[1, 2, 3, 4]}
+        tickValues={[1, 2, 3, 4, 5]}
         style={{
           tickLabels: { fontSize: 10, padding: 1 },
         }}

@@ -138,8 +138,8 @@ class App extends Component {
         render={(props) => (
           <StudentInfo
             {...props}
-            items={this.state.students}
-            studentInfo={this.state.studentInfo}
+            students={this.state.students}
+            bioData={this.state.studentInfo}
           />
         )}
       />

@@ -17,6 +17,7 @@ class App extends Component {
       parsed: false,
     };
     this.handleChartChange = this.handleChartChange.bind(this);
+    // this.handleStudentSelect = this.handleStudentSelect.bind(this);
   }
 
   componentDidMount() {
@@ -83,15 +84,28 @@ class App extends Component {
     if (prevState.students !== this.state.students) {
       this.addStudentInfo();
     }
+    if (prevState.selectOneStudent !== this.state.selectOneStudent) {
+      console.log(
+        `selectOneStudent was updated to : ${this.state.selectOneStudent}`
+      );
+      console.log(this.state.selectOneStudent);
+      this.handleChartChange(this.state.selectOneStudent);
+    }
   }
 
   handleChartChange = (selectValue) => {
+    console.log(`selectValue threw a handleChartChange with this `);
     console.log(selectValue);
     const selectedStudents = selectValue.map((item) => item.value);
     console.log(selectedStudents);
     this.setState({ selectedStudents: selectedStudents });
     // const { name, value } = event.target;
     // this.setState({ [name]: value });
+  };
+
+  handleStudentSelect = (value) => {
+    console.log([value]);
+    this.setState({ selectOneStudent: [{ value: value, label: value }] });
   };
 
   render() {
@@ -126,7 +140,7 @@ class App extends Component {
         name="selectNav"
         items={this.state.students}
         // placeholder="None"
-        // handleChange={this.handleChartChange}
+        handleChange={this.handleStudentSelect}
         //   defaultValue="Unknown"
       />
     );
@@ -140,6 +154,7 @@ class App extends Component {
             {...props}
             students={this.state.students}
             bioData={this.state.studentInfo}
+            handleStudentSelect={this.handleStudentSelect}
           />
         )}
       />

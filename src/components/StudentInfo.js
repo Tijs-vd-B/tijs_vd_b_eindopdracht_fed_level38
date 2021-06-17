@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route } from "react-router-dom";
 import NoMatchPage from "./NoMatchPage";
 
@@ -41,8 +41,16 @@ function StudentInfo(props) {
       <br /> <img src={studentBio.photo} alt={studentBio.firstname} />
     </div>
   );
+  // let updateSelectedStudent = {
+  //   value: props.students[studentIndex],
+  //   label: props.students[studentIndex],
+  // };
+  useEffect(() => {
+    props.handleStudentSelect(studentBio.firstname);
+  }, []);
 
   return <>{renderBio}</>;
+  // return <>renderBio</>;
 }
 
 export default StudentInfo;

@@ -1,9 +1,12 @@
 import React, { Component } from "react";
 import "./App.css";
 import Tabletop from "tabletop";
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import Chart from "./components/Chart";
 import InputSelect from "./components/InputSelect";
+import NavBar from "./components/NavBar";
+import StudentInfo from "./components/StudentInfo";
+import NoMatchPage from "./components/NoMatchPage";
 
 class App extends Component {
   constructor() {
@@ -116,22 +119,46 @@ class App extends Component {
         //   defaultValue="Unknown"
       />
     );
+    const navBar = !this.state.parsed ? (
+      ""
+    ) : (
+      <NavBar
+        name="selectNav"
+        items={this.state.students}
+        // placeholder="None"
+        // handleChange={this.handleChartChange}
+        //   defaultValue="Unknown"
+      />
+    );
+    const studentPage = !this.state.parsed ? (
+      ""
+    ) : (
+      <Route
+        path="/students/:studentName"
+        render={(props) => (
+          <StudentInfo
+            {...props}
+            items={this.state.students}
+            studentInfo={this.state.studentInfo}
+          />
+        )}
+      />
+    );
+
     return (
       <div className="App">
         <header className="App-header">
           <h1>Student Dashboard</h1>
           <h3>(be informed)</h3>
-          {/* <StudentData /> */}
           {text}
         </header>
+        {navBar}
         {chart}
         {selectChartBar}
         <Switch>
           <Route exact path="/" component={Home} />
-          {/* <Route path="/items" component={Items}/>
-            <Route path="/category" component={Category}/>
-            <Route path="/login" component={Login}/>}/>
-            <PrivateRoute path="/admin" component={Admin} isAuthenticated={fakeAuth.isAuthenticated}/> */}
+          {studentPage}
+          <Route component={NoMatchPage} />
         </Switch>
       </div>
     );

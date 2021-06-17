@@ -93,8 +93,11 @@ function Chart(props) {
       // domainPadding will add space to each side of VictoryBar to
       // prevent it from overlapping the axis
       domainPadding={20}
+      maxDomain={{ y: 5 }}
       padding={{ top: 5, bottom: 100, right: 40, left: 40 }}
-      containerComponent={<VictoryZoomContainer zoomDimension="x" />}
+      containerComponent={
+        <VictoryZoomContainer zoomDimension="x" minimumZoom={{ x: 6 }} />
+      }
     >
       <VictoryGroup offset={4}>
         <VictoryBar
@@ -125,6 +128,7 @@ function Chart(props) {
             data: { strokeWidth: "1" },
             parent: { border: "1px solid #ccc" },
           }}
+          interpolation="step"
           data={chartAvgData}
           x="assignment"
           y="difficultyRating"
@@ -136,6 +140,7 @@ function Chart(props) {
             data: { strokeWidth: "1" },
             parent: { border: "1px solid #ccc" },
           }}
+          interpolation="step"
           data={chartAvgData}
           x="assignment"
           y="enjoymentRating"

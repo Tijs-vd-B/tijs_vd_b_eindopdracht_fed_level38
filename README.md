@@ -39,3 +39,7 @@ Changelog:
   > Created NavBar component that creates list with links to Home and all individual students
   > App.js has a Route to /students added in the <Switch> render
   > Students route has a <Route in itself based on the category/studentname behind it (that will need some content)
+
+  > Student route (and 404/NoMatchPage) moved into separate components
+  > Path to students page is /students/:studentName if another name is entered 404  will be shown
+  > props are passed down to studentInfo page to deal with

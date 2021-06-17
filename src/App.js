@@ -3,8 +3,10 @@ import "./App.css";
 import Tabletop from "tabletop";
 import { Switch, Route } from "react-router-dom";
 import Chart from "./components/Chart";
-import NavBar from "./components/NavBar";
 import InputSelect from "./components/InputSelect";
+import NavBar from "./components/NavBar";
+import StudentInfo from "./components/StudentInfo";
+import NoMatchPage from "./components/NoMatchPage";
 
 class App extends Component {
   constructor() {
@@ -128,12 +130,26 @@ class App extends Component {
         //   defaultValue="Unknown"
       />
     );
+    const studentPage = !this.state.parsed ? (
+      ""
+    ) : (
+      <Route
+        path="/students/:studentName"
+        render={(props) => (
+          <StudentInfo
+            {...props}
+            items={this.state.students}
+            studentInfo={this.state.studentInfo}
+          />
+        )}
+      />
+    );
+
     return (
       <div className="App">
         <header className="App-header">
           <h1>Student Dashboard</h1>
           <h3>(be informed)</h3>
-          {/* <StudentData /> */}
           {text}
         </header>
         {navBar}
@@ -141,10 +157,8 @@ class App extends Component {
         {selectChartBar}
         <Switch>
           <Route exact path="/" component={Home} />
-          {/* <Route path="/items" component={Items}/> */}
-          <Route path="/students" component={Students} />
-          {/*   <Route path="/login" component={Login}/>}/>
-            <PrivateRoute path="/admin" component={Admin} isAuthenticated={fakeAuth.isAuthenticated}/> */}
+          {studentPage}
+          <Route component={NoMatchPage} />
         </Switch>
       </div>
     );
@@ -164,16 +178,6 @@ export const Home = () => (
       publishing software like Aldus PageMaker including versions of Lorem
       Ipsum.
     </div>
-  </div>
-);
-
-export const Students = ({ match }) => (
-  <div>
-    <h1>Category Component</h1>
-    <Route
-      path={`${match.path}/:categoryName`}
-      render={(props) => <div>{props.match.params.categoryName} category</div>}
-    />
   </div>
 );
 

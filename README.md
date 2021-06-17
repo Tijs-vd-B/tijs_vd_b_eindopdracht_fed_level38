@@ -43,3 +43,5 @@ Changelog:
   > Student route (and 404/NoMatchPage) moved into separate components
   > Path to students page is /students/:studentName if another name is entered 404  will be shown
   > props are passed down to studentInfo page to deal with
+- Keys added to NavBar
+- Modified Chart a little bit with minimumzoom, average line graph in steps, fixed Y-axis

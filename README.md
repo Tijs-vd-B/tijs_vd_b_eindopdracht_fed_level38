@@ -55,3 +55,5 @@ Changelog:
 - Created RatingsToggle to switch between showing both, or only difficulty or enjoyment ratings...
   > Chose to hide ratings by using dummy data with 0's , this way it is easier to keep the layout and scheme of the chart intact
 - Added a nicer yet very simple color scheme, and added an event that shines a bit more light when hovering over chart bars to get more detail
+- Chart is rendered in Home
+- Student route on a path of a student that does not exists is handled better in StudentInfo now

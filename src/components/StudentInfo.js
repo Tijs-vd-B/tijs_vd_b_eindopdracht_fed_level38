@@ -14,18 +14,29 @@ function StudentInfo(props) {
   const studentIndex = props.students.indexOf(props.match.params.studentName);
   console.log(`this students index is: ${studentIndex}`);
 
-  let studentBio = {
-    firstname: props.students[studentIndex],
-    lastname: props.bioData[studentIndex].name.last,
-    age: props.bioData[studentIndex].dob.age,
-    phone: props.bioData[studentIndex].phone,
-    email: `${props.students[studentIndex].toLowerCase()}.${props.bioData[
-      studentIndex
-    ].name.last
-      .replace(/\s+/g, "") // no spaces
-      .toLowerCase()}@example.com`,
-    photo: props.bioData[studentIndex].picture.large,
-  };
+  let studentBio;
+  if (studentIndex === -1) {
+    studentBio = {
+      firstname: "Unknown",
+      lastname: "Unknown",
+      age: "Unknown",
+      phone: "Unknown",
+      email: "Unknown",
+    };
+  } else {
+    studentBio = {
+      firstname: props.students[studentIndex],
+      lastname: props.bioData[studentIndex].name.last,
+      age: props.bioData[studentIndex].dob.age,
+      phone: props.bioData[studentIndex].phone,
+      email: `${props.students[studentIndex].toLowerCase()}.${props.bioData[
+        studentIndex
+      ].name.last
+        .replace(/\s+/g, "") // no spaces
+        .toLowerCase()}@example.com`,
+      photo: props.bioData[studentIndex].picture.large,
+    };
+  }
 
   const renderBio = !props.students.includes(props.match.params.studentName) ? (
     <Route component={NoMatchPage} />

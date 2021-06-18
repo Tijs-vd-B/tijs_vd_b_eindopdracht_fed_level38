@@ -65,6 +65,7 @@ class App extends Component {
       students: Array.from(studentSet).sort(),
       parsed: true,
       setSelected: Array.from(studentSet).sort(),
+      selectedStudents: Array.from(studentSet).sort(),
     });
   }
 
@@ -100,9 +101,9 @@ class App extends Component {
   handleChartChange = (selectValue) => {
     console.log(`selectValue threw a handleChartChange with this `);
     console.log(selectValue);
-    const selectedStudents = selectValue.map((item) => item.value);
-    console.log(selectedStudents);
-    this.setState({ selectedStudents: selectedStudents });
+    const newSelectedStudents = selectValue.map((item) => item.value);
+    console.log(newSelectedStudents);
+    this.setState({ selectedStudents: newSelectedStudents });
     // const { name, value } = event.target;
     // this.setState({ [name]: value });
   };
@@ -142,16 +143,16 @@ class App extends Component {
     const text = !this.state.loaded
       ? "loading..."
       : `${this.state.data.length} records imported!`;
-    const chart = !this.state.parsed ? (
-      ""
-    ) : (
-      <Chart
-        data={this.state.data}
-        assignments={this.state.assignments}
-        selectedStudents={this.state.selectedStudents}
-        ratingToggle={this.state.ratingToggle}
-      />
-    );
+    // const chart = !this.state.parsed ? (
+    //   ""
+    // ) : (
+    //   <Chart
+    //     data={this.state.data}
+    //     assignments={this.state.assignments}
+    //     selectedStudents={this.state.selectedStudents}
+    //     ratingToggle={this.state.ratingToggle}
+    //   />
+    // );
     const selectChartBar = !this.state.parsed ? (
       ""
     ) : (
@@ -175,22 +176,23 @@ class App extends Component {
         //   defaultValue="Unknown"
       />
     );
-    const studentPage = !this.state.parsed ? (
-      ""
-    ) : (
-      <Route
-        path="/students/:studentName"
-        children={(props) => (
-          <StudentInfo
-            {...props}
-            students={this.state.students}
-            bioData={this.state.studentInfo}
-            handleStudentSelect={this.handleStudentSelect}
-            onceSelected={this.state.selectOneStudent}
-          />
-        )}
-      />
-    );
+    const studentPage =
+      !this.state.parsed || !this.state.studentInfo ? (
+        ""
+      ) : (
+        <Route
+          path="/students/:studentName"
+          children={(props) => (
+            <StudentInfo
+              {...props}
+              students={this.state.students}
+              bioData={this.state.studentInfo}
+              handleStudentSelect={this.handleStudentSelect}
+              onceSelected={this.state.selectOneStudent}
+            />
+          )}
+        />
+      );
 
     return (
       <div className="App">
@@ -202,9 +204,22 @@ class App extends Component {
         {navBar}
         {selectChartBar}
         <RatingToggle handleToggleChange={this.handleToggleChange} />
-        {chart}
+        {/* {chart} */}
         <Switch>
-          <Route exact path="/" component={Home} />
+          <Route
+            exact
+            path="/"
+            render={(props) => (
+              <Home
+                {...props}
+                parsed={this.state.parsed}
+                data={this.state.data}
+                assignments={this.state.assignments}
+                selectedStudents={this.state.selectedStudents}
+                ratingToggle={this.state.ratingToggle}
+              />
+            )}
+          />
           {studentPage}
           <Route component={NoMatchPage} />
         </Switch>

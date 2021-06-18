@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { Route } from "react-router-dom";
 import NoMatchPage from "./NoMatchPage";
+import Chart from "./Chart";
+import RatingToggle from "./RatingToggle";
 
 function StudentInfo(props) {
   console.log(props);
@@ -38,6 +40,17 @@ function StudentInfo(props) {
     };
   }
 
+  const chart = !props.parsed ? (
+    ""
+  ) : (
+    <Chart
+      data={props.data}
+      assignments={props.assignments}
+      selectedStudents={[studentBio.firstname]}
+      ratingToggle={props.ratingToggle}
+    />
+  );
+
   const renderBio = !props.students.includes(props.match.params.studentName) ? (
     <Route component={NoMatchPage} />
   ) : (
@@ -50,6 +63,10 @@ function StudentInfo(props) {
       <br />
       Email: {studentBio.email}
       <br /> <img src={studentBio.photo} alt={studentBio.firstname} />
+      <br />
+      <hr />
+      <RatingToggle handleToggleChange={props.handleToggleChange} /> <hr />
+      {chart}
     </div>
   );
   // let updateSelectedStudent = {

@@ -159,6 +159,14 @@ class App extends Component {
               bioData={this.state.studentInfo}
               handleStudentSelect={this.handleStudentSelect}
               onceSelected={this.state.selectOneStudent}
+              parsed={this.state.parsed}
+              data={this.state.data}
+              assignments={this.state.assignments}
+              selectedStudents={this.state.selectedStudents}
+              ratingToggle={this.state.ratingToggle}
+              setSelected={this.state.setSelected}
+              handleChange={this.handleChartChange}
+              handleToggleChange={this.handleToggleChange}
             />
           )}
         />

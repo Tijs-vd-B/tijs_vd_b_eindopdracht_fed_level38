@@ -57,3 +57,4 @@ Changelog:
 - Added a nicer yet very simple color scheme, and added an event that shines a bit more light when hovering over chart bars to get more detail
 - Chart is rendered in Home
 - Student route on a path of a student that does not exists is handled better in StudentInfo now
+- RatingToggle rendered in Home

@@ -1,5 +1,6 @@
 import React from "react";
 import Chart from "./Chart";
+import RatingToggle from "./RatingToggle";
 
 const Home = (props) => {
   const chart = !props.parsed ? (
@@ -26,6 +27,9 @@ const Home = (props) => {
         with desktop publishing software like Aldus PageMaker including versions
         of Lorem Ipsum.
       </div>
+      <br />
+      <hr />
+      <RatingToggle handleToggleChange={props.handleToggleChange} /> <hr />
       {chart}
     </div>
   );

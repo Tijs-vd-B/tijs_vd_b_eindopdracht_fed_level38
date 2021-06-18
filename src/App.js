@@ -2,13 +2,11 @@ import React, { Component } from "react";
 import "./App.css";
 import Tabletop from "tabletop";
 import { Switch, Route } from "react-router-dom";
-import Chart from "./components/Chart";
 import InputSelect from "./components/InputSelect";
 import NavBar from "./components/NavBar";
 import StudentInfo from "./components/StudentInfo";
 import NoMatchPage from "./components/NoMatchPage";
 import Home from "./components/Home";
-import RatingToggle from "./components/RatingToggle";
 
 class App extends Component {
   constructor() {
@@ -203,7 +201,6 @@ class App extends Component {
         </header>
         {navBar}
         {selectChartBar}
-        <RatingToggle handleToggleChange={this.handleToggleChange} />
         {/* {chart} */}
         <Switch>
           <Route
@@ -217,6 +214,7 @@ class App extends Component {
                 assignments={this.state.assignments}
                 selectedStudents={this.state.selectedStudents}
                 ratingToggle={this.state.ratingToggle}
+                handleToggleChange={this.handleToggleChange}
               />
             )}
           />

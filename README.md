@@ -49,3 +49,5 @@ Changelog:
   > set a fake email with firstname.lastname@exampple.com (stripping out possible spaces in the last name (and first name while were at it))
   > - Somehow I think the students have not been entirely honest filling in their data ;)
   > Going to a student route triggers the chart to display that students data
+  > Well, it was, until I removed it...
+- Home is a separate component now

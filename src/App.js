@@ -7,6 +7,7 @@ import InputSelect from "./components/InputSelect";
 import NavBar from "./components/NavBar";
 import StudentInfo from "./components/StudentInfo";
 import NoMatchPage from "./components/NoMatchPage";
+import Home from "./components/Home";
 
 class App extends Component {
   constructor() {
@@ -61,6 +62,7 @@ class App extends Component {
       assignments: Array.from(assignmentSet),
       students: Array.from(studentSet).sort(),
       parsed: true,
+      setSelected: Array.from(studentSet).sort(),
     });
   }
 
@@ -105,7 +107,10 @@ class App extends Component {
 
   handleStudentSelect = (value) => {
     console.log([value]);
-    this.setState({ selectOneStudent: [{ value: value, label: value }] });
+    this.setState({
+      selectOneStudent: [{ value: value, label: value }],
+      setSelected: [value],
+    });
   };
 
   render() {
@@ -129,6 +134,7 @@ class App extends Component {
         name="selectedStudents"
         items={this.state.students}
         placeholder="None"
+        selected={this.state.setSelected}
         handleChange={this.handleChartChange}
         //   defaultValue="Unknown"
       />
@@ -149,12 +155,13 @@ class App extends Component {
     ) : (
       <Route
         path="/students/:studentName"
-        render={(props) => (
+        children={(props) => (
           <StudentInfo
             {...props}
             students={this.state.students}
             bioData={this.state.studentInfo}
             handleStudentSelect={this.handleStudentSelect}
+            onceSelected={this.state.selectOneStudent}
           />
         )}
       />
@@ -179,21 +186,5 @@ class App extends Component {
     );
   }
 }
-export const Home = () => (
-  <div>
-    <h1> Home Component</h1>
-    <div>
-      Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-      Lorem Ipsum has been the industry's standard dummy text ever since the
-      1500s, when an unknown printer took a galley of type and scrambled it to
-      make a type specimen book. It has survived not only five centuries, but
-      also the leap into electronic typesetting, remaining essentially
-      unchanged. It was popularised in the 1960s with the release of Letraset
-      sheets containing Lorem Ipsum passages, and more recently with desktop
-      publishing software like Aldus PageMaker including versions of Lorem
-      Ipsum.
-    </div>
-  </div>
-);
 
 export default App;

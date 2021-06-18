@@ -45,9 +45,9 @@ function StudentInfo(props) {
   //   value: props.students[studentIndex],
   //   label: props.students[studentIndex],
   // };
-  useEffect(() => {
-    props.handleStudentSelect(studentBio.firstname);
-  }, []);
+  // useEffect(() => {
+  //   props.handleStudentSelect(studentBio.firstname);
+  // }, []);
 
   return <>{renderBio}</>;
   // return <>renderBio</>;

@@ -85,13 +85,33 @@ function Chart(props) {
     ),
   }));
 
+  let chartNulData = [];
+  chartNulData = props.assignments.map((assignment) => ({
+    assignment: assignment,
+    difficultyRating: 0,
+    enjoymentRating: 0,
+  }));
+
+  let difficultyBarData = props.ratingToggle.difficulty
+    ? chartBarData
+    : chartNulData;
+  let enjoymentBarData = props.ratingToggle.enjoyment
+    ? chartBarData
+    : chartNulData;
+  let difficultyLineData = props.ratingToggle.difficulty
+    ? chartAvgData
+    : chartNulData;
+  let enjoymentLineData = props.ratingToggle.enjoyment
+    ? chartAvgData
+    : chartNulData;
+
   // render() {
   return (
     <VictoryChart
       width={900}
       height={250}
       // adding the material theme provided with Victory
-      theme={VictoryTheme.grayscale}
+      // theme={VictoryTheme.material}
       // domainPadding will add space to each side of VictoryBar to
       // prevent it from overlapping the axis
       domainPadding={20}
@@ -103,23 +123,90 @@ function Chart(props) {
     >
       <VictoryGroup offset={4}>
         <VictoryBar
-          labelComponent={<VictoryTooltip pointerWidth={0} />}
+          labelComponent={
+            <VictoryTooltip pointerWidth={0} style={{ fill: "#282c34" }} />
+          }
+          events={[
+            {
+              target: "data",
+              eventHandlers: {
+                onMouseOver: () => {
+                  return [
+                    {
+                      target: "data",
+                      mutation: () => ({
+                        style: { fill: "orange", width: 5 },
+                      }),
+                    },
+                    {
+                      target: "labels",
+                      mutation: () => ({ active: true }),
+                    },
+                  ];
+                },
+                onMouseOut: () => {
+                  return [
+                    {
+                      target: "data",
+                      mutation: () => {},
+                    },
+                    {
+                      target: "labels",
+                      mutation: () => ({ active: false }),
+                    },
+                  ];
+                },
+              },
+            },
+          ]}
           labels={chartBarData.map((item) => item.difficultyRating)}
-          data={chartBarData}
+          data={difficultyBarData}
           x="assignment"
           y="difficultyRating"
+          color={"#282c34"}
           // tickValues={[1, 2, 3, 4, 5]}
           tickFormat={chartBarData.map((item) => item.assignment)}
         />
         <VictoryBar
           labelComponent={
-            <VictoryTooltip pointerWidth={0} style={{ fill: "tomato" }} />
+            <VictoryTooltip pointerWidth={0} style={{ fill: "#6d7d9c" }} />
           }
+          events={[
+            {
+              target: "data",
+              eventHandlers: {
+                onMouseOver: () => {
+                  return [
+                    {
+                      target: "data",
+                      mutation: () => ({ style: { fill: "gold", width: 5 } }),
+                    },
+                    {
+                      target: "labels",
+                      mutation: () => ({ active: true }),
+                    },
+                  ];
+                },
+                onMouseOut: () => {
+                  return [
+                    {
+                      target: "data",
+                      mutation: () => {},
+                    },
+                    {
+                      target: "labels",
+                      mutation: () => ({ active: false }),
+                    },
+                  ];
+                },
+              },
+            },
+          ]}
           labels={chartBarData.map((item) => item.enjoymentRating)}
-          data={chartBarData}
+          data={enjoymentBarData}
           x="assignment"
           y="enjoymentRating"
-          colorScale={"warm"}
+          color={"#6d7d9c"}
           // tickValues={[1, 2, 3, 4, 5]}
           tickFormat={chartBarData.map((item) => item.assignment)}
         />
@@ -131,9 +218,10 @@ function Chart(props) {
             parent: { border: "1px solid #ccc" },
           }}
           interpolation="step"
-          data={chartAvgData}
+          data={difficultyLineData}
           x="assignment"
           y="difficultyRating"
+          color={"#282c34"}
           // tickValues={[1, 2, 3, 4, 5]}
           tickFormat={chartAvgData.map((item) => item.assignment)}
         />
@@ -143,10 +231,10 @@ function Chart(props) {
             parent: { border: "1px solid #ccc" },
           }}
           interpolation="step"
-          data={chartAvgData}
+          data={enjoymentLineData}
           x="assignment"
           y="enjoymentRating"
-          colorScale={"warm"}
+          color={"#6d7d9c"}
           // tickValues={[1, 2, 3, 4, 5]}
           tickFormat={chartAvgData.map((item) => item.assignment)}
         />
@@ -160,7 +248,7 @@ function Chart(props) {
           labels: { fontSize: 8, padding: 1 },
         }}
         // tickValues={[1, 2, 3, 4, 5]}
-        tickFormat={chartBarData.map((item) => item.assignment)}
+        tickFormat={chartAvgData.map((item) => item.assignment)}
       />
       <VictoryAxis
         dependentAxis

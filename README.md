@@ -51,3 +51,7 @@ Changelog:
   > Going to a student route triggers the chart to display that students data
   > Well, it was, until I removed it...
 - Home is a separate component now
+- NavBar inline
+- Created RatingsToggle to switch between showing both, or only difficulty or enjoyment ratings...
+  > Chose to hide ratings by using dummy data with 0's , this way it is easier to keep the layout and scheme of the chart intact
+- Added a nicer yet very simple color scheme, and added an event that shines a bit more light when hovering over chart bars to get more detail

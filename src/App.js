@@ -8,12 +8,14 @@ import NavBar from "./components/NavBar";
 import StudentInfo from "./components/StudentInfo";
 import NoMatchPage from "./components/NoMatchPage";
 import Home from "./components/Home";
+import RatingToggle from "./components/RatingToggle";
 
 class App extends Component {
   constructor() {
     super();
     this.state = {
       data: [],
+      ratingToggle: { difficulty: true, enjoyment: true },
       loaded: false,
       parsed: false,
     };
@@ -113,6 +115,28 @@ class App extends Component {
     });
   };
 
+  handleToggleChange = (event) => {
+    if (event.target.type === "radio") {
+      switch (event.target.value) {
+        case "difficulty":
+          this.setState({
+            ratingToggle: { difficulty: true, enjoyment: false },
+          });
+          break;
+        case "enjoyment":
+          this.setState({
+            ratingToggle: { difficulty: false, enjoyment: true },
+          });
+          break;
+        default:
+          this.setState({
+            ratingToggle: { difficulty: true, enjoyment: true },
+          });
+          break;
+      }
+    }
+  };
+
   render() {
     console.log("updated state --->", this.state);
     const text = !this.state.loaded
@@ -125,6 +149,7 @@ class App extends Component {
         data={this.state.data}
         assignments={this.state.assignments}
         selectedStudents={this.state.selectedStudents}
+        ratingToggle={this.state.ratingToggle}
       />
     );
     const selectChartBar = !this.state.parsed ? (
@@ -175,8 +200,9 @@ class App extends Component {
           {text}
         </header>
         {navBar}
-        {chart}
         {selectChartBar}
+        <RatingToggle handleToggleChange={this.handleToggleChange} />
+        {chart}
         <Switch>
           <Route exact path="/" component={Home} />
           {studentPage}

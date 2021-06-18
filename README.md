@@ -45,3 +45,9 @@ Changelog:
   > props are passed down to studentInfo page to deal with
 - Keys added to NavBar
 - Modified Chart a little bit with minimumzoom, average line graph in steps, fixed Y-axis
+  > Parse the received info from https://randomuser.me/ (with the first name from the student data)
+  > set a fake email with firstname.lastname@exampple.com (stripping out possible spaces in the last name (and first name while were at it))
+  > - Somehow I think the students have not been entirely honest filling in their data ;)
+  > Going to a student route triggers the chart to display that students data
+  > Well, it was, until I removed it...
+- Home is a separate component now

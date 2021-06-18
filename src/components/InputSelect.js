@@ -3,6 +3,10 @@ import Select from "react-select";
 import makeAnimated from "react-select/animated";
 
 function InputSelect(props) {
+  const selectedItems = props.selected.map((item) => ({
+    value: item,
+    label: item,
+  }));
   const listItems = props.items.map((item) => ({ value: item, label: item }));
   const animatedComponents = makeAnimated();
 
@@ -14,7 +18,7 @@ function InputSelect(props) {
       //   className="song-form-item"
       name={props.name}
       options={listItems}
-      defaultValue={listItems}
+      defaultValue={selectedItems}
       //   selectValue={props.items[0]}
       //   placeholder={props.placeholder}
       onChange={props.handleChange}

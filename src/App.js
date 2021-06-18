@@ -7,6 +7,7 @@ import InputSelect from "./components/InputSelect";
 import NavBar from "./components/NavBar";
 import StudentInfo from "./components/StudentInfo";
 import NoMatchPage from "./components/NoMatchPage";
+import Home from "./components/Home";
 
 class App extends Component {
   constructor() {
@@ -17,6 +18,7 @@ class App extends Component {
       parsed: false,
     };
     this.handleChartChange = this.handleChartChange.bind(this);
+    // this.handleStudentSelect = this.handleStudentSelect.bind(this);
   }
 
   componentDidMount() {
@@ -60,6 +62,7 @@ class App extends Component {
       assignments: Array.from(assignmentSet),
       students: Array.from(studentSet).sort(),
       parsed: true,
+      setSelected: Array.from(studentSet).sort(),
     });
   }
 
@@ -83,15 +86,31 @@ class App extends Component {
     if (prevState.students !== this.state.students) {
       this.addStudentInfo();
     }
+    if (prevState.selectOneStudent !== this.state.selectOneStudent) {
+      console.log(
+        `selectOneStudent was updated to : ${this.state.selectOneStudent}`
+      );
+      console.log(this.state.selectOneStudent);
+      this.handleChartChange(this.state.selectOneStudent);
+    }
   }
 
   handleChartChange = (selectValue) => {
+    console.log(`selectValue threw a handleChartChange with this `);
     console.log(selectValue);
     const selectedStudents = selectValue.map((item) => item.value);
     console.log(selectedStudents);
     this.setState({ selectedStudents: selectedStudents });
     // const { name, value } = event.target;
     // this.setState({ [name]: value });
+  };
+
+  handleStudentSelect = (value) => {
+    console.log([value]);
+    this.setState({
+      selectOneStudent: [{ value: value, label: value }],
+      setSelected: [value],
+    });
   };
 
   render() {
@@ -115,6 +134,7 @@ class App extends Component {
         name="selectedStudents"
         items={this.state.students}
         placeholder="None"
+        selected={this.state.setSelected}
         handleChange={this.handleChartChange}
         //   defaultValue="Unknown"
       />
@@ -126,7 +146,7 @@ class App extends Component {
         name="selectNav"
         items={this.state.students}
         // placeholder="None"
-        // handleChange={this.handleChartChange}
+        handleChange={this.handleStudentSelect}
         //   defaultValue="Unknown"
       />
     );
@@ -135,11 +155,13 @@ class App extends Component {
     ) : (
       <Route
         path="/students/:studentName"
-        render={(props) => (
+        children={(props) => (
           <StudentInfo
             {...props}
-            items={this.state.students}
-            studentInfo={this.state.studentInfo}
+            students={this.state.students}
+            bioData={this.state.studentInfo}
+            handleStudentSelect={this.handleStudentSelect}
+            onceSelected={this.state.selectOneStudent}
           />
         )}
       />
@@ -164,21 +186,5 @@ class App extends Component {
     );
   }
 }
-export const Home = () => (
-  <div>
-    <h1> Home Component</h1>
-    <div>
-      Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-      Lorem Ipsum has been the industry's standard dummy text ever since the
-      1500s, when an unknown printer took a galley of type and scrambled it to
-      make a type specimen book. It has survived not only five centuries, but
-      also the leap into electronic typesetting, remaining essentially
-      unchanged. It was popularised in the 1960s with the release of Letraset
-      sheets containing Lorem Ipsum passages, and more recently with desktop
-      publishing software like Aldus PageMaker including versions of Lorem
-      Ipsum.
-    </div>
-  </div>
-);
 
 export default App;

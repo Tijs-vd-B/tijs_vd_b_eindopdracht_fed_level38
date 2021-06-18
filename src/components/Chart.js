@@ -60,7 +60,9 @@ function Chart(props) {
   };
 
   let chartBarData = [];
-  console.log(props.selectedStudents);
+  console.log(
+    `in Charts this is the current selectedStudents: ${props.selectedStudents}`
+  );
   console.log(`does the filter work? selectedData = ${selectedData.length}`);
   chartBarData = props.assignments.map((assignment) => ({
     assignment: assignment,

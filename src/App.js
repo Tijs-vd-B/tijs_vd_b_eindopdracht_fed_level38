@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import "./App.css";
 import Tabletop from "tabletop";
 import { Switch, Route } from "react-router-dom";
-import InputSelect from "./components/InputSelect";
 import NavBar from "./components/NavBar";
 import StudentInfo from "./components/StudentInfo";
 import NoMatchPage from "./components/NoMatchPage";
@@ -141,38 +140,11 @@ class App extends Component {
     const text = !this.state.loaded
       ? "loading..."
       : `${this.state.data.length} records imported!`;
-    // const chart = !this.state.parsed ? (
-    //   ""
-    // ) : (
-    //   <Chart
-    //     data={this.state.data}
-    //     assignments={this.state.assignments}
-    //     selectedStudents={this.state.selectedStudents}
-    //     ratingToggle={this.state.ratingToggle}
-    //   />
-    // );
-    const selectChartBar = !this.state.parsed ? (
-      ""
-    ) : (
-      <InputSelect
-        name="selectedStudents"
-        items={this.state.students}
-        placeholder="None"
-        selected={this.state.setSelected}
-        handleChange={this.handleChartChange}
-        //   defaultValue="Unknown"
-      />
-    );
+
     const navBar = !this.state.parsed ? (
       ""
     ) : (
-      <NavBar
-        name="selectNav"
-        items={this.state.students}
-        // placeholder="None"
-        handleChange={this.handleStudentSelect}
-        //   defaultValue="Unknown"
-      />
+      <NavBar name="selectNav" items={this.state.students} />
     );
     const studentPage =
       !this.state.parsed || !this.state.studentInfo ? (
@@ -200,8 +172,6 @@ class App extends Component {
           {text}
         </header>
         {navBar}
-        {selectChartBar}
-        {/* {chart} */}
         <Switch>
           <Route
             exact
@@ -214,6 +184,9 @@ class App extends Component {
                 assignments={this.state.assignments}
                 selectedStudents={this.state.selectedStudents}
                 ratingToggle={this.state.ratingToggle}
+                students={this.state.students}
+                setSelected={this.state.setSelected}
+                handleChange={this.handleChartChange}
                 handleToggleChange={this.handleToggleChange}
               />
             )}

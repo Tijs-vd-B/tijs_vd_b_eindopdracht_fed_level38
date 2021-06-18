@@ -1,6 +1,7 @@
 import React from "react";
 import Chart from "./Chart";
 import RatingToggle from "./RatingToggle";
+import InputSelect from "./InputSelect";
 
 const Home = (props) => {
   const chart = !props.parsed ? (
@@ -13,6 +14,20 @@ const Home = (props) => {
       ratingToggle={props.ratingToggle}
     />
   );
+
+  const selectChartBar = !props.parsed ? (
+    ""
+  ) : (
+    <InputSelect
+      name="selectedStudents"
+      items={props.students}
+      placeholder="None"
+      selected={props.setSelected}
+      handleChange={props.handleChartChange}
+      //   defaultValue="Unknown"
+    />
+  );
+
   return (
     <div className="home-container">
       <h1> Home Component</h1>
@@ -30,6 +45,7 @@ const Home = (props) => {
       <br />
       <hr />
       <RatingToggle handleToggleChange={props.handleToggleChange} /> <hr />
+      {selectChartBar} <hr />
       {chart}
     </div>
   );

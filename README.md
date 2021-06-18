@@ -58,3 +58,5 @@ Changelog:
 - Chart is rendered in Home
 - Student route on a path of a student that does not exists is handled better in StudentInfo now
 - RatingToggle rendered in Home
+- Home is now also home to the selectChartBar, which provides the list of students to (de)select for rendering in the Chart through InputSelect
+

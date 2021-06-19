@@ -17,6 +17,9 @@ function NavBar(props) {
           <Link to="/">Home</Link>
         </li>
         {studentLink}
+        <li key="Table">
+          <Link to="/table">Table</Link>
+        </li>
       </ul>
       <hr />
     </>

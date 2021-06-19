@@ -6,6 +6,7 @@ import NavBar from "./components/NavBar";
 import StudentInfo from "./components/StudentInfo";
 import NoMatchPage from "./components/NoMatchPage";
 import Home from "./components/Home";
+import Table from "./components/Table";
 
 class App extends Component {
   constructor() {
@@ -15,6 +16,7 @@ class App extends Component {
       ratingToggle: { difficulty: true, enjoyment: true },
       loaded: false,
       parsed: false,
+      nextId: 0,
     };
   }
 
@@ -27,8 +29,10 @@ class App extends Component {
       parseNumbers: true,
       callback: (googleData) => {
         let cleanData = [];
+        let setId = this.state.nextId;
         googleData.forEach((element) => {
           const newItem = {
+            id: setId,
             student: element["Wie ben je?"],
             assignment:
               element["Welke opdracht of welk project lever je nu in?"],
@@ -36,11 +40,14 @@ class App extends Component {
             enjoymentRating: element["Hoe leuk vond je deze opdracht?"],
           };
           cleanData = [...cleanData].concat(newItem);
+          setId++;
         });
+
         this.setState({
           ...this.state,
           data: cleanData,
           loaded: true,
+          nextId: setId,
         });
       },
     });
@@ -129,6 +136,7 @@ class App extends Component {
               data={this.state.data}
               assignments={this.state.assignments}
               ratingToggle={this.state.ratingToggle}
+              handleToggleChange={this.handleToggleChange}
             />
           )}
         />
@@ -164,6 +172,23 @@ class App extends Component {
             )}
           />
           {studentPage}
+          <Route
+            exact
+            path="/table"
+            render={(props) => (
+              <Table
+                {...props}
+                parsed={this.state.parsed}
+                data={this.state.data}
+                assignments={this.state.assignments}
+                selectedStudents={this.state.selectedStudents}
+                ratingToggle={this.state.ratingToggle}
+                students={this.state.students}
+                handleChartChange={this.handleChartChange}
+                handleToggleChange={this.handleToggleChange}
+              />
+            )}
+          />
           <Route component={NoMatchPage} />
         </Switch>
       </div>

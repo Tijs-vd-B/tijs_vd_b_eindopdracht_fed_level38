@@ -1,6 +1,6 @@
 import React from "react";
-import InputSelect from "./InputSelect";
-import DataTable from "./DataTable";
+import InputSelect from "../components/InputSelect";
+import DataTable from "../components/DataTable";
 
 const Home = (props) => {
   const table = !props.parsed ? (

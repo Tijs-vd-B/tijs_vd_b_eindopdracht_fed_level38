@@ -1,7 +1,7 @@
 import React from "react";
-import Chart from "./Chart";
-import RatingToggle from "./RatingToggle";
-import InputSelect from "./InputSelect";
+import Chart from "../components/Chart";
+import InputSelect from "../components/InputSelect";
+import RatingToggle from "../components/RatingToggle";
 
 const Home = (props) => {
   const chart = !props.parsed ? (

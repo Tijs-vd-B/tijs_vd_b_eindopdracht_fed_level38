@@ -1,9 +1,9 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import NoMatchPage from "./NoMatchPage";
-import Chart from "./Chart";
-import RatingToggle from "./RatingToggle";
-import DataTable from "./DataTable";
+import NoMatchPage from "../components/NoMatchPage";
+import Chart from "../components/Chart";
+import RatingToggle from "../components/RatingToggle";
+import DataTable from "../components/DataTable";
 
 function StudentInfo(props) {
   const studentIndex = props.students.indexOf(props.match.params.studentName);

@@ -72,3 +72,4 @@ Changelog:
   > The Table works quite well, however when more than a few students are selected resizing the browser window is quite slow, therefore I opted to put the full Table in it's own page as a separate Table route
   > - Resizing is only slow on the Table page, moving away from it, resizing, and then returning to it seems to be fine
   > - For the single student pages I opted to have both the Chart and the Table in view since that seems to cause no slowdowns (for now)
+- Last bit of 'clean-up' (I hope), trying to keep the workflow organized, so Home / Table and StudentInfo have been moved into their own views folder

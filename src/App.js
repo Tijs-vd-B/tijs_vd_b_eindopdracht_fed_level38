@@ -16,12 +16,9 @@ class App extends Component {
       loaded: false,
       parsed: false,
     };
-    this.handleChartChange = this.handleChartChange.bind(this);
-    // this.handleStudentSelect = this.handleStudentSelect.bind(this);
   }
 
   componentDidMount() {
-    // this.setState({ loaded: false });
     Tabletop.init({
       key: "1fKX0b0-FMXqo6M0VfPIt7oBYUzgVbxtNXtN790i_mN8", // my-key
       // key: "1SwA98fnmzIFrSjbPDvzUw7JEqW1VE5YUJvchcEL0aUE", // my-key (no-publish test)
@@ -52,16 +49,13 @@ class App extends Component {
   parseData() {
     const assignmentSet = new Set();
     this.state.data.forEach((i) => assignmentSet.add(i.assignment));
-    console.log(assignmentSet);
     const studentSet = new Set();
     this.state.data.forEach((i) => studentSet.add(i.student));
-    console.log(studentSet);
     this.setState({
       ...this.state,
       assignments: Array.from(assignmentSet),
       students: Array.from(studentSet).sort(),
       parsed: true,
-      setSelected: Array.from(studentSet).sort(),
       selectedStudents: Array.from(studentSet).sort(),
     });
   }
@@ -74,7 +68,6 @@ class App extends Component {
       .then((res) => res.json())
       .then((data) => {
         this.setState({ studentInfo: data.results });
-        console.log(this.state.studentInfo);
       })
       .catch(console.log);
   }
@@ -86,31 +79,11 @@ class App extends Component {
     if (prevState.students !== this.state.students) {
       this.addStudentInfo();
     }
-    if (prevState.selectOneStudent !== this.state.selectOneStudent) {
-      console.log(
-        `selectOneStudent was updated to : ${this.state.selectOneStudent}`
-      );
-      console.log(this.state.selectOneStudent);
-      this.handleChartChange(this.state.selectOneStudent);
-    }
   }
 
   handleChartChange = (selectValue) => {
-    console.log(`selectValue threw a handleChartChange with this `);
-    console.log(selectValue);
     const newSelectedStudents = selectValue.map((item) => item.value);
-    console.log(newSelectedStudents);
     this.setState({ selectedStudents: newSelectedStudents });
-    // const { name, value } = event.target;
-    // this.setState({ [name]: value });
-  };
-
-  handleStudentSelect = (value) => {
-    console.log([value]);
-    this.setState({
-      selectOneStudent: [{ value: value, label: value }],
-      setSelected: [value],
-    });
   };
 
   handleToggleChange = (event) => {
@@ -136,16 +109,11 @@ class App extends Component {
   };
 
   render() {
-    console.log("updated state --->", this.state);
+    // console.log("updated state --->", this.state);
     const text = !this.state.loaded
       ? "loading..."
       : `${this.state.data.length} records imported!`;
 
-    const navBar = !this.state.parsed ? (
-      ""
-    ) : (
-      <NavBar name="selectNav" items={this.state.students} />
-    );
     const studentPage =
       !this.state.parsed || !this.state.studentInfo ? (
         ""
@@ -157,16 +125,10 @@ class App extends Component {
               {...props}
               students={this.state.students}
               bioData={this.state.studentInfo}
-              handleStudentSelect={this.handleStudentSelect}
-              onceSelected={this.state.selectOneStudent}
               parsed={this.state.parsed}
               data={this.state.data}
               assignments={this.state.assignments}
-              selectedStudents={this.state.selectedStudents}
               ratingToggle={this.state.ratingToggle}
-              setSelected={this.state.setSelected}
-              handleChange={this.handleChartChange}
-              handleToggleChange={this.handleToggleChange}
             />
           )}
         />
@@ -176,10 +138,13 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <h1>Student Dashboard</h1>
-          <h3>(be informed)</h3>
-          {text}
+          <p>{text}</p>
         </header>
-        {navBar}
+        <NavBar
+          name="selectNav"
+          students={this.state.students}
+          parsed={this.state.parsed}
+        />
         <Switch>
           <Route
             exact
@@ -193,8 +158,7 @@ class App extends Component {
                 selectedStudents={this.state.selectedStudents}
                 ratingToggle={this.state.ratingToggle}
                 students={this.state.students}
-                setSelected={this.state.setSelected}
-                handleChange={this.handleChartChange}
+                handleChartChange={this.handleChartChange}
                 handleToggleChange={this.handleToggleChange}
               />
             )}

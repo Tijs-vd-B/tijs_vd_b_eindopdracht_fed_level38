@@ -22,31 +22,43 @@ const Home = (props) => {
       name="selectedStudents"
       items={props.students}
       placeholder="None"
-      selected={props.setSelected}
-      handleChange={props.handleChartChange}
-      //   defaultValue="Unknown"
+      selected={props.selectedStudents}
+      handleChartChange={props.handleChartChange}
     />
   );
 
+  const numberOfStudents = !props.parsed ? "..." : props.students.length;
+
+  const numberOfAssignments = !props.parsed ? "..." : props.assignments.length;
+
   return (
     <div className="home-container">
-      <h1> Home Component</h1>
+      <h1> The Overview</h1>
       <div>
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industry's standard dummy text ever
-        since the 1500s, when an unknown printer took a galley of type and
-        scrambled it to make a type specimen book. It has survived not only five
-        centuries, but also the leap into electronic typesetting, remaining
-        essentially unchanged. It was popularised in the 1960s with the release
-        of Letraset sheets containing Lorem Ipsum passages, and more recently
-        with desktop publishing software like Aldus PageMaker including versions
-        of Lorem Ipsum.
+        Keeping track of <b>{numberOfStudents}</b> students.
+        <br /> They have given their ratings on how much they enjoyed each
+        assignment and how difficult they found them to be.
+        <br /> <b>{numberOfAssignments}</b> assignments have been rated.
+        <br /> The chart below shows two bars for each assignment, the
+        left/darker one shows the difficulty encountered, the right/lighter one
+        the enjoyment had.
+        <br /> Each bar represents the average of all the selected students
+        displayed below.
+        <br /> When only one student is selected it shows their specific ratings
+        as you would see in their personal page, reachable by selecting them by
+        their indivdual name above.
+        <br /> The horizontal step-lines always show the average rating of all
+        students combined for reference, using the same colors as the bars.
+        <br /> The Chart can be zoomed with the scrollwheel and panned
+        horizontally through dragging with the mouse (when zoomed in)
+        <br />
       </div>
       <br />
       <hr />
       <RatingToggle handleToggleChange={props.handleToggleChange} /> <hr />
-      {selectChartBar} <hr />
       {chart}
+      <hr />
+      {selectChartBar}
     </div>
   );
 };

@@ -15,13 +15,10 @@ function InputSelect(props) {
       closeMenuOnSelect={false}
       components={animatedComponents}
       isMulti
-      //   className="song-form-item"
       name={props.name}
       options={listItems}
       defaultValue={selectedItems}
-      //   selectValue={props.items[0]}
-      //   placeholder={props.placeholder}
-      onChange={props.handleChange}
+      onChange={props.handleChartChange}
     />
   );
 }

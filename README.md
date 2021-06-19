@@ -60,3 +60,9 @@ Changelog:
 - RatingToggle rendered in Home
 - Home is now also home to the selectChartBar, which provides the list of students to (de)select for rendering in the Chart through InputSelect
 - Each student route now also renders the RatingsToggle and the Chart (with that students data)
+- Bug: I broke filtering on selected students in Home Chart and didn't notice, passed the wrong handleChange to props: FiXed
+- Moved the select-bar under the Chart so when choosing, the list does not obscure the Chart
+- Added a bit of explanatory text in the Home / Overview page , and the StudentInfo pages
+- Used color in the RatingToggle to make it a bit more stylish, but it also serves as legend for the Chart...
+- Some styling, some in css, some directly in the jsx color
+- A lot of clean-up, unused stuff and console.logs

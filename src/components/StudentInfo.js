@@ -1,30 +1,15 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Route } from "react-router-dom";
 import NoMatchPage from "./NoMatchPage";
 import Chart from "./Chart";
 import RatingToggle from "./RatingToggle";
 
 function StudentInfo(props) {
-  console.log(props);
-  console.log(
-    "is he in da list?",
-    props.students.includes(props.match.params.studentName)
-  );
-
-  console.log(props.bioData);
-
   const studentIndex = props.students.indexOf(props.match.params.studentName);
-  console.log(`this students index is: ${studentIndex}`);
 
   let studentBio;
   if (studentIndex === -1) {
-    studentBio = {
-      firstname: "Unknown",
-      lastname: "Unknown",
-      age: "Unknown",
-      phone: "Unknown",
-      email: "Unknown",
-    };
+    studentBio = {};
   } else {
     studentBio = {
       firstname: props.students[studentIndex],
@@ -55,13 +40,15 @@ function StudentInfo(props) {
     <Route component={NoMatchPage} />
   ) : (
     <div className="student-info">
-      Studentname: {studentBio.firstname} {studentBio.lastname}
+      <h1>
+        {studentBio.firstname} {studentBio.lastname}
+      </h1>
+      <b>age</b> {studentBio.age}
       <br />
-      Age: {studentBio.age}
+      <b>phone</b> {studentBio.phone}
       <br />
-      Phone: {studentBio.phone}
+      <b>email</b> {studentBio.email}
       <br />
-      Email: {studentBio.email}
       <br /> <img src={studentBio.photo} alt={studentBio.firstname} />
       <br />
       <hr />
@@ -69,16 +56,8 @@ function StudentInfo(props) {
       {chart}
     </div>
   );
-  // let updateSelectedStudent = {
-  //   value: props.students[studentIndex],
-  //   label: props.students[studentIndex],
-  // };
-  // useEffect(() => {
-  //   props.handleStudentSelect(studentBio.firstname);
-  // }, []);
 
   return <>{renderBio}</>;
-  // return <>renderBio</>;
 }
 
 export default StudentInfo;

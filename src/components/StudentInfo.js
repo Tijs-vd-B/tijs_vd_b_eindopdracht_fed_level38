@@ -3,6 +3,7 @@ import { Route } from "react-router-dom";
 import NoMatchPage from "./NoMatchPage";
 import Chart from "./Chart";
 import RatingToggle from "./RatingToggle";
+import DataTable from "./DataTable";
 
 function StudentInfo(props) {
   const studentIndex = props.students.indexOf(props.match.params.studentName);
@@ -36,6 +37,16 @@ function StudentInfo(props) {
     />
   );
 
+  const table = !props.parsed ? (
+    ""
+  ) : (
+    <DataTable
+      data={props.data}
+      assignments={props.assignments}
+      selectedStudents={[studentBio.firstname]}
+    />
+  );
+
   const renderBio = !props.students.includes(props.match.params.studentName) ? (
     <Route component={NoMatchPage} />
   ) : (
@@ -54,6 +65,7 @@ function StudentInfo(props) {
       <hr />
       <RatingToggle handleToggleChange={props.handleToggleChange} /> <hr />
       {chart}
+      {table}
     </div>
   );
 

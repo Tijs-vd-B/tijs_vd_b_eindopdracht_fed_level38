@@ -66,3 +66,9 @@ Changelog:
 - Used color in the RatingToggle to make it a bit more stylish, but it also serves as legend for the Chart...
 - Some styling, some in css, some directly in the jsx color
 - A lot of clean-up, unused stuff and console.logs
+  > Decided to have a stab at incorporating the table component I created for the Song Saver assignment (L35).
+  > DataTable is basically my L35's SongList with the filtering stripped out, and remodelled a tiny bit to accommodate the use of the same input as Chart
+  > Added the insertion of an .id to the initial parsing of the Google spreadsheet data to be used for key creation of the table (as is React's best practise)
+  > The Table works quite well, however when more than a few students are selected resizing the browser window is quite slow, therefore I opted to put the full Table in it's own page as a separate Table route
+  > - Resizing is only slow on the Table page, moving away from it, resizing, and then returning to it seems to be fine
+  > - For the single student pages I opted to have both the Chart and the Table in view since that seems to cause no slowdowns (for now)

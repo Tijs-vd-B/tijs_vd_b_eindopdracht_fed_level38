@@ -52,6 +52,9 @@ const Home = (props) => {
         <br /> The Chart can be zoomed with the scrollwheel and panned
         horizontally through dragging with the mouse (when zoomed in)
         <br />
+        <br /> If, like some, you prefer to see the data as a (spreadsheet-like)
+        Table you can find a link to such an overview through the link marked
+        Table above.
       </div>
       <br />
       <hr />

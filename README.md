@@ -2,9 +2,25 @@ Teaching assignment for WinC FED level 38
 
 React Student Dashboard
 
+  Provides an overview of collected student feedback, accumulated in a google spreadsheet (retrieved through Tabletop)
+  Data is presented in clear charts (generated through Victory) and tables.
+  Per student pages provide individual student data, including (mock) bio data.
+
 
   - setup basic structure:
     - App
+       - components
+	     - Chart
+		 - DataTable
+	     - NavBar
+		 - RatingToggle
+		 - InputSelect
+		 - NoMatchPage
+       - views
+	     - Home
+		 - students/:studentName
+		 - Table
+
 
 Changelog:
 

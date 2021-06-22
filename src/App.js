@@ -3,10 +3,10 @@ import "./App.css";
 import Tabletop from "tabletop";
 import { Switch, Route } from "react-router-dom";
 import NavBar from "./components/NavBar";
-import StudentInfo from "./components/StudentInfo";
 import NoMatchPage from "./components/NoMatchPage";
-import Home from "./components/Home";
-import Table from "./components/Table";
+import StudentInfo from "./views/StudentInfo";
+import Home from "./views/Home";
+import Table from "./views/Table";
 
 class App extends Component {
   constructor() {
